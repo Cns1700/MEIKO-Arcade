@@ -145,39 +145,76 @@ body {
     letter-spacing: 1px;
 }
 
-/* --- Base Arcade Difficulty Chip Style --- */
+/* --- Base Arcade Difficulty Chip Style Setup --- */
 .difficulty {
-    font-size: 0.8rem;
+    font-size: 0.75rem;       /* Optimized font sizing for tight boundaries */
     font-weight: 900;
-    padding: 4px 10px;
+    padding: 6px 4px;         /* Compact horizontal space padding */
     border-radius: 4px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-align: center;
-    min-width: 80px; /* Keeps tags matching uniformly in size */
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    min-width: 88px;          /* Expanded box constraint to hold X-EXTREME securely */
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    white-space: nowrap;      /* 🌟 Forces 'X-EXTREME' to remain perfectly flat on one line! */
+    display: inline-block;
 }
 
-/* Custom Dynamic Arcade Color Channels 🟢 🟡 🔴 🟣 */
-.difficulty.normal {
-    background: #00cc66;
-    color: #ffffff;
+/* Color assignments when neutral */
+.difficulty.normal { background: #00cc66; color: #ffffff; }
+.difficulty.hard { background: #ffcc00; color: #111111; }
+.difficulty.extreme { background: #ff003c; color: #ffffff; }
+.difficulty.x-extreme { background: #9900ff; color: #ffffff; }
+
+/* --- 🔄 CSS INFINITE STEPS FLASHING ENGINE --- */
+
+/* Green Constant Flash */
+.difficulty.normal.flashing-active {
+    animation: flashNormalConstant 0.4s infinite steps(2);
+}
+@keyframes flashNormalConstant {
+    0%, 100% { background: #00cc66; color: #ffffff; box-shadow: 0 0 15px #00cc66; }
+    50% { background: #002b16; color: rgba(255, 255, 255, 0.2); box-shadow: none; }
 }
 
-.difficulty.hard {
-    background: #ffcc00;
-    color: #111111;
+/* Yellow Constant Flash */
+.difficulty.hard.flashing-active {
+    animation: flashHardConstant 0.4s infinite steps(2);
+}
+@keyframes flashHardConstant {
+    0%, 100% { background: #ffcc00; color: #111111; box-shadow: 0 0 15px #ffcc00; }
+    50% { background: #332900; color: rgba(17, 17, 17, 0.2); box-shadow: none; }
 }
 
-.difficulty.extreme {
-    background: #ff003c;
-    color: #ffffff;
+/* Crimson Constant Flash */
+.difficulty.extreme.flashing-active {
+    animation: flashExtremeConstant 0.4s infinite steps(2);
+}
+@keyframes flashExtremeConstant {
+    0%, 100% { background: #ff003c; color: #ffffff; box-shadow: 0 0 15px #ff003c; }
+    50% { background: #33000c; color: rgba(255, 255, 255, 0.2); box-shadow: none; }
 }
 
-.difficulty.x-extreme {
-    background: #9900ff;
-    color: #ffffff;
-    text-shadow: 0 0 5px #ffffff;
-    animation: flashText 1s infinite steps(2); /* Extra flashy warning for top tier difficulty! */
+/* Purple Constant Flash */
+.difficulty.x-extreme.flashing-active {
+    animation: flashXExtremeConstant 0.4s infinite steps(2);
+}
+@keyframes flashXExtremeConstant {
+    0%, 100% { background: #9900ff; color: #ffffff; box-shadow: 0 0 15px #9900ff; }
+    50% { background: #1f0033; color: rgba(255, 255, 255, 0.2); box-shadow: none; }
+}
+
+/* --- 🔄 SHARED CABINET ANIMATIONS --- */
+@keyframes neonPulse {
+    0%, 100% { text-shadow: 0 0 10px #ff003c, 0 0 20px #ff003c, 0 0 30px #ff003c; opacity: 1; }
+    50% { text-shadow: 0 0 5px #ff003c, 0 0 10px #ff003c; opacity: 0.85; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 /* Hover & Active Selected Track Row States */
@@ -192,10 +229,9 @@ body {
     color: #ff003c; /* Lights up track digit tag */
 }
 
+/* Keep active row difficulty visible but clear out any static red overrides */
 .track-row.active .difficulty {
-    background: #ff003c;
-    color: #ffffff;
-    box-shadow: 0 0 8px #ff003c;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
 }
 
 /* --- Right Side: Artwork Showcase Frame --- */
@@ -219,23 +255,25 @@ body {
     align-items: center;
 }
 
-/* Updated Placeholder Container to enforce fluid, un-stretched scaling 🎯 */
-.artwork-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #000000; /* Letterboxes widescreen images with deep black bars if needed */
-}
-
-/* Force the dynamically injected image to crop perfectly centered without squeezing */
+/* --- 💎 Showroom Monitor Aspect Ratio Constraints 📺 --- */
 .artwork-placeholder img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover; /* 🌟 Magic line: crops the sides of widescreen images seamlessly to fit the square container! */
-    object-position: center; /* Keeps MEIKO perfectly centered in the frame */
+    object-fit: contain;       /* 🌟 Keeps the full 1280x720 cover visible without cropping any edges! */
+    object-position: center;
     display: block;
+    background-color: #000000; /* Letterboxes widescreen art with deep black arcade bars */
+}
+
+/* --- Updated Showroom Monitor to Handle Mixed Aspect Ratios Elegantly 📺 --- */
+.artwork-placeholder img {
+    width: 100% !important;
+    height: 100% !important;
+    /* CHANGE: Switch from 'cover' to 'contain' to see the FULL image without cropping! */
+    object-fit: contain; 
+    object-position: center;
+    display: block;
+    background-color: #000000; /* Letterboxes widescreen files with a clean arcade look */
 }
 
 /* --- Interactive Rhythm Button Nodes 🔴 (Option 4) --- */

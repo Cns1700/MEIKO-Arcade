@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const trackRows = document.querySelectorAll(".track-row");
     const artworkPlaceholder = document.querySelector(".artwork-placeholder");
     const imageViewport = document.querySelector(".image-viewport");
+    const difficultyChips = document.querySelectorAll(".difficulty");
 
     // Pre-mapping track data details for easy data-binding swaps
     const trackDatabase = {
@@ -30,33 +31,51 @@ document.addEventListener("DOMContentLoaded", () => {
         const activeTrack = trackDatabase[trackNum];
         
         if (activeTrack) {
-            // Flash the screen container quickly to simulate an arcade monitor loading state ⚡
             imageViewport.style.opacity = "0.3";
             
             setTimeout(() => {
-                // Update content string inside the placeholder box slot with forced absolute sizing
                 artworkPlaceholder.innerHTML = `
                     <img src="${activeTrack.imageSrc}" 
-                         alt="${activeTrack.altText}" 
-                         style="width: 100%; height: 100%; object-fit: cover; display: block; animation: fadeIn 0.3s ease;">
+                         alt="${activeTrack.altText}">
                 `;
                 imageViewport.style.opacity = "1";
             }, 150);
         }
     };
 
-    // Bind click events to all the track rows
+    // Bind click events to all the track rows for song switching
     trackRows.forEach(row => {
-        row.addEventListener("click", () => {
-            // 1. Clear out old active selector states
+        row.addEventListener("click", (e) => {
+            // Stop track change trigger if clicking on a difficulty badge inside the row
+            if (e.target.classList.contains("difficulty")) return;
+
+            // 1. Clear out old active selector states for rows
             trackRows.forEach(r => r.classList.remove("active"));
-            
-            // 2. Snap active styling focus to the row that was just clicked
             row.classList.add("active");
 
-            // 3. Extract the track index number to reference our asset mapping
+            // 🌟 FIX: Instantly wipe out all active difficulty flashes across all tracks when switching rows!
+            difficultyChips.forEach(c => c.classList.remove("flashing-active"));
+
             const trackNum = row.querySelector(".track-number").textContent;
             switchArcadeTrack(trackNum);
+        });
+    });
+
+    // --- 🎯 Persistent Difficulty Selection Engine ---
+    difficultyChips.forEach(chip => {
+        chip.addEventListener("click", () => {
+            // Find the track row this difficulty belongs to
+            const parentRow = chip.closest(".track-row");
+            
+            // BOUNDARY CHECK: Only allow difficulty updates if this specific row is selected/active
+            if (!parentRow.classList.contains("active")) return;
+            
+            // Clear flashing classes ONLY from the difficulty chips inside this specific active track row
+            const siblingChips = parentRow.querySelectorAll(".difficulty");
+            siblingChips.forEach(c => c.classList.remove("flashing-active"));
+            
+            // Add continuous loop toggle onto the clicked button
+            chip.classList.add("flashing-active");
         });
     });
 
@@ -65,23 +84,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     arcadeButtons.forEach(button => {
         button.addEventListener("mousedown", () => {
-            // Simulate a physical deep button sink
             button.style.transform = "scale(0.9) translateY(2px)";
         });
-
         button.addEventListener("mouseup", () => {
-            // Instantly snap back up on finger release
             button.style.transform = "scale(1) translateY(0)";
         });
-
         button.addEventListener("mouseleave", () => {
-            // Backup boundary trigger in case mouse glides off compressed state
             button.style.transform = "scale(1) translateY(0)";
         });
     });
 
     // --- 🚀 AUTOMATIC INITIAL LOAD TRIGGER ---
-    // Instantly loads track 01's cover art using our clean image rendering logic!
     const defaultActiveRow = document.querySelector(".track-row.active");
     if (defaultActiveRow) {
         const defaultTrackNum = defaultActiveRow.querySelector(".track-number").textContent;
