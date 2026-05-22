@@ -1,0 +1,309 @@
+/* --- Global Reset & Pitch Black Arcade Room --- */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #080808;   /* Pitch black to make neon elements explode 🌌 */
+    color: #e2e8f0;
+    font-family: 'Rajdhani', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* --- Retro Token Score Counter 🎫 (Option 6) --- */
+.token-counter-deck {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    gap: 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: rgba(18, 18, 18, 0.8);
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1px solid #ff003c;
+    /* Soft crimson aura around the hud tracker */
+    box-shadow: 0 0 10px rgba(255, 0, 60, 0.2);
+}
+
+.token-counter-deck span {
+    color: #ffaa00; /* Vibrant token gold font */
+    text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+}
+
+/* --- Main Cabinet Layout Container Frame --- */
+.cabinet-frame {
+    width: 100%;
+    max-width: 1100px;
+    background-color: #121212;   /* Deep arcade cabinet charcoal */
+    border: 3px solid #ff003c;   /* Sharp MEIKO Crimson structural trim */
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 
+                0 0 40px rgba(255, 0, 60, 0.25); /* Cabinet casing spill light */
+    position: relative;
+}
+
+/* --- Blinking Neon Header Banner --- */
+.arcade-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* 🎤 Stacking Text Shadows for Realistic Neon Sign Glare */
+.neon-text-pulsing {
+    font-family: 'Monoton', cursive;
+    font-size: 5rem;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: 4px;
+    animation: neonPulse 2s infinite ease-in-out; /* The glowing breathing loop! */
+}
+
+.cabinet-subtitle {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #ff5500;             /* Electric accent orange */
+    letter-spacing: 4px;
+    margin-top: 10px;
+    text-shadow: 0 0 8px rgba(255, 85, 0, 0.5);
+}
+
+/* --- Main Display Screen Split Viewport --- */
+.arcade-screen {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Split cleanly between track rows and preview window */
+    gap: 40px;
+}
+
+@media (max-width: 768px) {
+    .arcade-screen {
+        grid-template-columns: 1fr; /* Stack vertically seamlessly on mobile viewports */
+    }
+}
+
+/* --- Left Side: Track Selection Core --- */
+.track-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #ffffff;
+    border-left: 4px solid #ff003c;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* Interactive Track Selection Rows */
+.track-row {
+    background: #1a1a1a;
+    border: 1px solid #333333;
+    padding: 15px 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.track-number {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #444444;
+    transition: color 0.25s ease;
+}
+
+.track-meta {
+    flex-grow: 1;
+}
+
+.track-meta h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #dddddd;
+}
+
+.track-meta p {
+    margin: 4px 0 0 0;
+    font-size: 0.85rem;
+    color: #888888;
+    letter-spacing: 1px;
+}
+
+.difficulty {
+    font-size: 0.9rem;
+    font-weight: 900;
+    background: #2a2a2a;
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: #aaaaaa;
+    letter-spacing: 1px;
+}
+
+/* Hover & Active Selected Track Row States */
+.track-row:hover, .track-row.active {
+    background: #221417;
+    border-color: #ff003c;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.15);
+    transform: translateX(5px); /* Gentle arcade deck pop response */
+}
+
+.track-row:hover .track-number, .track-row.active .track-number {
+    color: #ff003c; /* Lights up track digit tag */
+}
+
+.track-row.active .difficulty {
+    background: #ff003c;
+    color: #ffffff;
+    box-shadow: 0 0 8px #ff003c;
+}
+
+/* --- Right Side: Artwork Showcase Frame --- */
+.art-showcase-frame {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.image-viewport {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Locked perfectly square for cover artwork formats */
+    background-color: #0d0d0d;
+    border: 2px solid #222222;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.artwork-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Interactive Rhythm Button Nodes 🔴 (Option 4) --- */
+.arcade-footer-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.insert-coin-text {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ff5500;
+    animation: flashText 1.5s infinite steps(2); /* Instant blinking token alert text */
+}
+
+.rhythm-button-deck {
+    display: flex;
+    gap: 20px;
+}
+
+/* --- Update this block inside style.css to style the symbols perfectly 🎯 --- */
+.arcade-btn-node {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #222222;
+    border: 3px solid #444444;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.6);
+
+    /* New styles added to align the arcade shapes centered and glowing ⬇️ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif; /* Clean geometric text rendering */
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #555555; /* Muted when unlit */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Make symbols glow white when you hover over their respective buttons! 🌟 */
+.arcade-btn-node:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+}
+
+/* Specific colored glow bindings on mouse hover actions */
+.arcade-btn-node.btn-red:hover {
+    background: #ff003c;
+    border-color: #ff88a3;
+    box-shadow: 0 0 20px #ff003c, inset 0 -2px 5px rgba(0,0,0,0.4);
+}
+
+.arcade-btn-node.btn-blue:hover {
+    background: #0066ff;
+    border-color: #88b5ff;
+    box-shadow: 0 0 20px #0066ff, inset 0 -2px 5px rgba(0,0,0,0.4);
+}
+
+.arcade-btn-node.btn-yellow:hover {
+    background: #ffcc00;
+    border-color: #ffea88;
+    box-shadow: 0 0 20px #ffcc00, inset 0 -2px 5px rgba(0,0,0,0.4);
+}
+
+.arcade-btn-node.btn-green:hover {
+    background: #00cc66;
+    border-color: #88f0bc;
+    box-shadow: 0 0 20px #00cc66, inset 0 -2px 5px rgba(0,0,0,0.4);
+}
+
+
+/* --- 🔄 CSS KEYFRAMES ANIMATION ENGINE --- */
+
+/* Breathing Neon Luminescence Loop Engine */
+@keyframes neonPulse {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                     0 0 20px #ff003c,
+                     0 0 30px #ff003c,
+                     0 0 40px #ff003c;
+    }
+    50% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.6),
+                     0 0 10px #ff003c,
+                     0 0 15px #ff003c,
+                     0 0 25px #ff003c;
+    }
+}
+
+/* Sharp Blink Score Alert Tracker Loop */
+@keyframes flashText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+/* --- 🛠️ Fade-In Keyframe Engine for Incoming Track Art --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
