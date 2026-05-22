@@ -145,14 +145,39 @@ body {
     letter-spacing: 1px;
 }
 
+/* --- Base Arcade Difficulty Chip Style --- */
 .difficulty {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 900;
-    background: #2a2a2a;
     padding: 4px 10px;
     border-radius: 4px;
-    color: #aaaaaa;
     letter-spacing: 1px;
+    text-align: center;
+    min-width: 80px; /* Keeps tags matching uniformly in size */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* Custom Dynamic Arcade Color Channels 🟢 🟡 🔴 🟣 */
+.difficulty.normal {
+    background: #00cc66;
+    color: #ffffff;
+}
+
+.difficulty.hard {
+    background: #ffcc00;
+    color: #111111;
+}
+
+.difficulty.extreme {
+    background: #ff003c;
+    color: #ffffff;
+}
+
+.difficulty.x-extreme {
+    background: #9900ff;
+    color: #ffffff;
+    text-shadow: 0 0 5px #ffffff;
+    animation: flashText 1s infinite steps(2); /* Extra flashy warning for top tier difficulty! */
 }
 
 /* Hover & Active Selected Track Row States */
@@ -180,9 +205,10 @@ body {
     gap: 20px;
 }
 
+/* --- Updated Showroom Monitor to Handle Mixed Aspect Ratios Perfectly 📺 --- */
 .image-viewport {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Locked perfectly square for cover artwork formats */
+    aspect-ratio: 1 / 1; /* Retains its beautiful square cabinet display format */
     background-color: #0d0d0d;
     border: 2px solid #222222;
     border-radius: 8px;
@@ -193,12 +219,23 @@ body {
     align-items: center;
 }
 
+/* Updated Placeholder Container to enforce fluid, un-stretched scaling 🎯 */
 .artwork-placeholder {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #000000; /* Letterboxes widescreen images with deep black bars if needed */
+}
+
+/* Force the dynamically injected image to crop perfectly centered without squeezing */
+.artwork-placeholder img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover; /* 🌟 Magic line: crops the sides of widescreen images seamlessly to fit the square container! */
+    object-position: center; /* Keeps MEIKO perfectly centered in the frame */
+    display: block;
 }
 
 /* --- Interactive Rhythm Button Nodes 🔴 (Option 4) --- */
