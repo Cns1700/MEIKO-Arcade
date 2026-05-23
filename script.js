@@ -79,18 +79,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- 🔴 Rhythm Controller Node Interactivity ---
+// --- 🎮 Rhythm Controller Node Interactivity ---
     const arcadeButtons = document.querySelectorAll(".arcade-btn-node");
 
     arcadeButtons.forEach(button => {
         button.addEventListener("mousedown", () => {
+            // Depress physically and trigger bright neon ignited state!
             button.style.transform = "scale(0.9) translateY(2px)";
+            button.classList.add("active-pressed");
         });
+
         button.addEventListener("mouseup", () => {
+            // Snap container back up and safely drop back down into slow pulsing ambient loop
             button.style.transform = "scale(1) translateY(0)";
+            button.classList.remove("active-pressed");
         });
+
         button.addEventListener("mouseleave", () => {
+            // Fallback boundary reset to prevent a button from getting locked if clicked and dragged away
             button.style.transform = "scale(1) translateY(0)";
+            button.classList.remove("active-pressed");
         });
     });
 

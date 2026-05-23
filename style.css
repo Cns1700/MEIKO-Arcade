@@ -293,63 +293,81 @@ body {
     animation: flashText 1.5s infinite steps(2); /* Instant blinking token alert text */
 }
 
+/* --- 🎮 Rhythm Controller Button Custom Deck Styles --- */
+
 .rhythm-button-deck {
     display: flex;
-    gap: 20px;
+    justify-content: center;
+    gap: 15px;
 }
 
-/* --- Update this block inside style.css to style the symbols perfectly 🎯 --- */
+/* Base Style Setup for the Controller Nodes (Ambient Dim States) */
 .arcade-btn-node {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background: #222222;
-    border: 3px solid #444444;
     cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
-    box-shadow: inset 0 3px 5px rgba(0,0,0,0.6);
-
-    /* New styles added to align the arcade shapes centered and glowing ⬇️ */
+    font-size: 1.1rem;
+    font-weight: 900;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif; /* Clean geometric text rendering */
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #555555; /* Muted when unlit */
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6);
+    transition: transform 0.05s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Make symbols glow white when you hover over their respective buttons! 🌟 */
-.arcade-btn-node:hover {
-    color: #ffffff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+/* Ambient Dim Base Colors with Slow Continuous Pulse Animations */
+.arcade-btn-node.btn-green { 
+    border: 3px solid #004d26; background: #002211; color: rgba(0, 204, 102, 0.4); 
+    animation: dimPulseGreen 3s infinite ease-in-out;
+}
+.arcade-btn-node.btn-pink { 
+    border: 3px solid #99004d; background: #3d001f; color: rgba(255, 0, 128, 0.4); 
+    animation: dimPulsePink 3s infinite ease-in-out;
+}
+.arcade-btn-node.btn-blue { 
+    border: 3px solid #003399; background: #00143d; color: rgba(0, 102, 255, 0.4); 
+    animation: dimPulseBlue 3s infinite ease-in-out;
+}
+.arcade-btn-node.btn-red { 
+    border: 3px solid #990026; background: #3d000f; color: rgba(255, 0, 60, 0.4); 
+    animation: dimPulseRed 3s infinite ease-in-out;
 }
 
-/* Specific colored glow bindings on mouse hover actions */
-.arcade-btn-node.btn-red:hover {
-    background: #ff003c;
-    border-color: #ff88a3;
-    box-shadow: 0 0 20px #ff003c, inset 0 -2px 5px rgba(0,0,0,0.4);
+/* --- 🔄 Continuous Ambient Slow-Pulsing Keyframe Engines --- */
+@keyframes dimPulseGreen {
+    0%, 100% { border-color: #004d26; background: #002211; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6); }
+    50% { border-color: #008040; background: #00331a; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 204, 102, 0.2); }
+}
+@keyframes dimPulsePink {
+    0%, 100% { border-color: #99004d; background: #3d001f; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6); }
+    50% { border-color: #cc0066; background: #5c002e; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6), 0 0 8px rgba(255, 0, 128, 0.2); }
+}
+@keyframes dimPulseBlue {
+    0%, 100% { border-color: #003399; background: #00143d; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6); }
+    50% { border-color: #0044cc; background: #001f5c; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 102, 255, 0.2); }
+}
+@keyframes dimPulseRed {
+    0%, 100% { border-color: #990026; background: #3d000f; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6); }
+    50% { border-color: #cc0033; background: #5c0017; box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.6), 0 0 8px rgba(255, 0, 60, 0.2); }
 }
 
-.arcade-btn-node.btn-blue:hover {
-    background: #0066ff;
-    border-color: #88b5ff;
-    box-shadow: 0 0 20px #0066ff, inset 0 -2px 5px rgba(0,0,0,0.4);
+/* High-Voltage Ignited States (Active on Click, Halts Animation Loops) */
+.arcade-btn-node.btn-green.active-pressed {
+    animation: none; background: #00cc66 !important; border-color: #88f0bc !important; color: #ffffff !important;
+    box-shadow: 0 0 25px #00cc66, inset 0 -2px 5px rgba(0,0,0,0.3) !important; text-shadow: 0 0 6px #ffffff;
 }
-
-.arcade-btn-node.btn-yellow:hover {
-    background: #ffcc00;
-    border-color: #ffea88;
-    box-shadow: 0 0 20px #ffcc00, inset 0 -2px 5px rgba(0,0,0,0.4);
+.arcade-btn-node.btn-pink.active-pressed {
+    animation: none; background: #ff0080 !important; border-color: #ffa3d1 !important; color: #ffffff !important;
+    box-shadow: 0 0 25px #ff0080, inset 0 -2px 5px rgba(0,0,0,0.3) !important; text-shadow: 0 0 6px #ffffff;
 }
-
-.arcade-btn-node.btn-green:hover {
-    background: #00cc66;
-    border-color: #88f0bc;
-    box-shadow: 0 0 20px #00cc66, inset 0 -2px 5px rgba(0,0,0,0.4);
+.arcade-btn-node.btn-blue.active-pressed {
+    animation: none; background: #0066ff !important; border-color: #88b5ff !important; color: #ffffff !important;
+    box-shadow: 0 0 25px #0066ff, inset 0 -2px 5px rgba(0,0,0,0.3) !important; text-shadow: 0 0 6px #ffffff;
+}
+.arcade-btn-node.btn-red.active-pressed {
+    animation: none; background: #ff003c !important; border-color: #ff88a3 !important; color: #ffffff !important;
+    box-shadow: 0 0 25px #ff003c, inset 0 -2px 5px rgba(0,0,0,0.3) !important; text-shadow: 0 0 6px #ffffff;
 }
 
 
